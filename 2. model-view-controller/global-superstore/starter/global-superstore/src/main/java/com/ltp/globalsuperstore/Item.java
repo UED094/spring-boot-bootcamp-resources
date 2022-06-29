@@ -2,15 +2,18 @@ package com.ltp.globalsuperstore;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.text.SimpleDateFormat;
+
 import java.util.Date;
 import java.util.Objects;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class Item {
     private String category;
     private String name;
     private Double price;
     private Double discount;
+    private String id;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
@@ -23,21 +26,16 @@ public class Item {
         this.date = date;
     }
 
-    public Item(){
-
+    public Item() {
+        this.id = UUID.randomUUID().toString();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Item)) return false;
-        Item item = (Item) o;
-        return category.equals(item.category) && name.equals(item.name) && price.equals(item.price) && discount.equals(item.discount) && date.equals(item.date);
+    public String getId() {
+        return this.id;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(category, name, price, discount, date);
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getCategory() {
@@ -79,4 +77,23 @@ public class Item {
     public void setDate(Date date) {
         this.date = date;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof Item)) {
+            return false;
+        }
+        Item item = (Item) o;
+        return Objects.equals(category, item.category) && Objects.equals(name, item.name)
+                && Objects.equals(price, item.price) && Objects.equals(discount, item.discount)
+                && Objects.equals(id, item.id) && Objects.equals(date, item.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(category, name, price, discount, id, date);
+    }
+
 }
