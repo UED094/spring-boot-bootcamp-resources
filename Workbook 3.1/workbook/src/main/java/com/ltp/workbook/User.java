@@ -17,11 +17,13 @@ public class User {
     @NotBlank(message = "Last name cannot be blank")
     @Size(min = 2, message = "Last name is too short")
     private String lastName;
+    @Username(message = "Cannot contain special characters or uppercase characters ")
     @NotBlank(message = "Username cannot be blank")
     @Size(min = 7, message = "Username should be at least 7 characters")
     private String username;
     @Email(message = "E-mail is not valid")
     private String email;
+    @Age(message = "Must be at least 18")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Past(message = "Birth date should be in the past")
     private Date birthDate;
